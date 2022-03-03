@@ -10,18 +10,18 @@ import store from "./redux/configureStore";
 const Stack = createStackNavigator();
 
 function App() {
-
   const token = useSelector((state) => state.auth.token);
   const isDark = useSelector((state) => state.accountPrefs.isDark);
 
   return (
     <NavigationContainer>
-      <StatusBar style={isDark ? "light" : "dark"}/>
-        <Stack.Navigator
-          mode="modal"
-          headerMode="none"
-          initialRouteName={token != null ? "Logged In" : "SignInSignUp"}
-          animationEnabled={false}>
+      <StatusBar style={isDark ? "light" : "dark"} />
+      <Stack.Navigator
+        mode="modal"
+        headerMode="none"
+        initialRouteName={token != null ? "Logged In" : "SignInSignUp"}
+        animationEnabled={false}
+      >
         <Stack.Screen component={SignInSignUpScreen} name="SignInSignUp" />
         <Stack.Screen component={LoggedInTabStack} name="Logged In" />
       </Stack.Navigator>
@@ -32,8 +32,7 @@ function App() {
 export default function AppWrapper() {
   return (
     <Provider store={store}>
-      <App/>
+      <App />
     </Provider>
-  )
+  );
 }
-

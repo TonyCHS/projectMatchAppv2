@@ -1,28 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { ActivityIndicator, TouchableOpacity, Text, View, Switch, Image, Animated, TouchableWithoutFeedback } from "react-native";
+import {
+  ActivityIndicator,
+  TouchableOpacity,
+  Text,
+  View,
+  Switch,
+  Image,
+  Animated,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { commonStyles, lightStyles, darkStyles } from "../styles/commonStyles";
 import axios from "axios";
 import { API, API_WHOAMI } from "../constants/API";
 import { useDispatch, useSelector } from "react-redux";
-import { changeModeAction, deletePicAction } from '../redux/ducks/accountPref';
+import { changeModeAction, deletePicAction } from "../redux/ducks/accountPref";
 import { logOutAction } from "../redux/ducks/blogAuth";
 
 export default function AccountScreen({ navigation }) {
-
   const [username, setUsername] = useState(null);
-  
+
   const token = useSelector((state) => state.auth.token);
   const isDark = useSelector((state) => state.accountPrefs.isDark);
-  const profilePicture = useSelector((state) => state.accountPrefs.profilePicture);
+  const profilePicture = useSelector(
+    (state) => state.accountPrefs.profilePicture
+  );
   const dispatch = useDispatch();
 
   const picSize = new Animated.Value(0);
   const sizeInterpolation = {
     inputRange: [0, 0.5, 1],
-    outputRange: [200, 300, 200]
-  }  
+    outputRange: [200, 300, 200],
+  };
 
-  const styles = { ...commonStyles, ...isDark ? darkStyles : lightStyles };
+  const styles = { ...commonStyles, ...(isDark ? darkStyles : lightStyles) };
 
   async function getUsername() {
     console.log("---- Getting user name ----");
@@ -39,7 +49,7 @@ export default function AccountScreen({ navigation }) {
         console.log(error.response.data);
         if (error.response.data.status_code === 401) {
           signOut();
-          navigation.navigate("SignInSignUp")
+          navigation.navigate("SignInSignUp");
         }
       } else {
         console.log(error);
@@ -49,12 +59,12 @@ export default function AccountScreen({ navigation }) {
   }
 
   function signOut() {
-    dispatch(logOutAction())
+    dispatch(logOutAction());
     navigation.navigate("SignInSignUp");
   }
 
   function switchMode() {
-    dispatch(changeModeAction())
+    dispatch(changeModeAction());
   }
 
   function changePicSize() {
@@ -62,14 +72,14 @@ export default function AccountScreen({ navigation }) {
       Animated.timing(picSize, {
         toValue: 1,
         duration: 2500,
-        useNativeDriver: false
-      }),
-    ).start()
+        useNativeDriver: false,
+      })
+    ).start();
   }
 
   function deletePhoto() {
-    dispatch(deletePicAction())
-    navigation.navigate("Camera")
+    dispatch(deletePicAction());
+    navigation.navigate("Camera");
   }
 
   useEffect(() => {
@@ -86,34 +96,57 @@ export default function AccountScreen({ navigation }) {
 
   return (
     <View style={[styles.container, { alignItems: "center" }]}>
-      <Text style={[styles.title, styles.text, { margin: 30 }]}> Hello {username} !</Text>
-      <View style={{height: profilePicture == null ? 0 : 320, justifyContent: "center"}}>
-        {profilePicture == null ? <View /> :
+      <Text style={[styles.title, styles.text, { margin: 30 }]}>
+        {" "}
+        Hello {username} !
+      </Text>
+      <View
+        style={{
+          height: profilePicture == null ? 0 : 320,
+          justifyContent: "center",
+        }}
+      >
+        {profilePicture == null ? (
+          <View />
+        ) : (
           <TouchableWithoutFeedback onPress={changePicSize}>
             <Animated.Image
               style={{
                 width: picSize.interpolate(sizeInterpolation),
                 height: picSize.interpolate(sizeInterpolation),
-                borderRadius: 200
+                borderRadius: 200,
               }}
-              source={{ uri: profilePicture?.uri }} />
+              source={{ uri: profilePicture?.uri }}
+            />
           </TouchableWithoutFeedback>
-        }
+        )}
       </View>
-      <TouchableOpacity onPress={() => profilePicture == null ? navigation.navigate("Camera") : deletePhoto()}>
-          <Text style={{ marginTop: 10, fontSize: 20, color: "#0000EE" }}> { profilePicture == null ? "No profile picture. Click to take one." : "Delete this photo and take another one."} </Text>
-          </TouchableOpacity>
-      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", margin: 20}}>
+      <TouchableOpacity
+        onPress={() =>
+          profilePicture == null ? navigation.navigate("Camera") : deletePhoto()
+        }
+      >
+        <Text style={{ marginTop: 10, fontSize: 20, color: "#0000EE" }}>
+          {" "}
+          {profilePicture == null
+            ? "No profile picture. Click to take one."
+            : "Delete this photo and take another one."}{" "}
+        </Text>
+      </TouchableOpacity>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          margin: 20,
+        }}
+      >
         <Text style={[styles.content, styles.text]}> Dark Mode? </Text>
-        <Switch
-          value={isDark}
-          onChange={switchMode}/>
+        <Switch value={isDark} onChange={switchMode} />
       </View>
       <TouchableOpacity style={[styles.button]} onPress={signOut}>
-        <Text style={styles.buttonText}>
-          Sign Out
-        </Text>
-        </TouchableOpacity>
+        <Text style={styles.buttonText}>Sign Out</Text>
+      </TouchableOpacity>
     </View>
   );
 }

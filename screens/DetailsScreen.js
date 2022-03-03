@@ -33,7 +33,7 @@ export default function ShowScreen({ navigation, route }) {
 
   async function getPost() {
     // Added 3 March 2022
-    const token = await AsyncStorage.getItem("token");
+    // const token = await AsyncStorage.getItem("token");
 
     const id = route.params.id;
     console.log(id);
