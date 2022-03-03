@@ -1,36 +1,42 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import axios from "axios";
 import { API, API_CREATE } from "../constants/API";
 import { lightStyles, darkStyles, commonStyles } from "../styles/commonStyles";
 import { useSelector } from "react-redux";
 
 export default function CreateScreen({ navigation }) {
-
   const token = useSelector((state) => state.auth);
   const isDark = useSelector((state) => state.accountPrefs.isDark);
-  const styles = {...commonStyles, ...isDark ? darkStyles : lightStyles };
+  const styles = { ...commonStyles, ...(isDark ? darkStyles : lightStyles) };
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   async function savePost() {
     const post = {
-      "title": title,
-      "content": content, 
-    }
+      title: title,
+      content: content,
+    };
+    // Added 3 March 2022
+    const token = await AsyncStorage.getItem("token");
     try {
       console.log(token);
       const response = await axios.post(API + API_CREATE, post, {
-        headers: { Authorization: `JWT ${token}` }
+        headers: { Authorization: `JWT ${token}` },
       });
-      console.log(response.data)
-      navigation.navigate("Index", { post: post })
+      console.log(response.data);
+      navigation.navigate("Index", { post: post });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
-
 
   return (
     <View style={styles.container}>
@@ -39,22 +45,25 @@ export default function CreateScreen({ navigation }) {
         <TextInput
           style={additionalStyles.input}
           value={title}
-          onChangeText={text => setTitle(text)}
+          onChangeText={(text) => setTitle(text)}
         />
-        <Text style={[additionalStyles.label, styles.text]}>Enter Content:</Text>
+        <Text style={[additionalStyles.label, styles.text]}>
+          Enter Content:
+        </Text>
         <TextInput
           style={additionalStyles.input}
           value={content}
-          onChangeText={text => setContent(text)}
+          onChangeText={(text) => setContent(text)}
         />
-      <TouchableOpacity style={[styles.button, {marginTop: 20}]} onPress={savePost}>
-        <Text style={styles.buttonText}>
-          Save
-        </Text>
+        <TouchableOpacity
+          style={[styles.button, { marginTop: 20 }]}
+          onPress={savePost}
+        >
+          <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </View>
     </View>
-  )
+  );
 }
 
 const additionalStyles = StyleSheet.create({
@@ -67,6 +76,6 @@ const additionalStyles = StyleSheet.create({
   label: {
     fontSize: 28,
     marginBottom: 10,
-    marginLeft: 5
-  }
+    marginLeft: 5,
+  },
 });

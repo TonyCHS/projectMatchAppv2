@@ -77,6 +77,8 @@ export default function IndexScreen({ navigation, route }) {
   }
 
   async function deletePost(id) {
+    // Added 3 March 2022
+    const token = await AsyncStorage.getItem("token");
     console.log("Deleting " + id);
     try {
       const response = await axios.delete(API + API_POSTS + `/${id}`, {
