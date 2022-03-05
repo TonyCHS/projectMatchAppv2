@@ -14,6 +14,8 @@ const initialState = {
 };
 
 export default function blogAuthReducer(state = initialState, action) {
+  // Added 5 March 2022
+  console.log(state);
   switch (action.type) {
     case LOG_IN:
       return { ...state, token: action.payload };

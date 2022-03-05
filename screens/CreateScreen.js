@@ -28,7 +28,7 @@ export default function CreateScreen({ navigation }) {
       content: content,
     };
     // Added 3 March 2022
-    // const token = await AsyncStorage.getItem("token");
+    //const token = await AsyncStorage.getItem("token");
     try {
       console.log(token);
       const response = await axios.post(API + API_CREATE, post, {

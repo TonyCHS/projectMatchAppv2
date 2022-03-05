@@ -152,7 +152,7 @@ export default function SignInSignUpScreen({ navigation }) {
           LayoutAnimation.configureNext({
             duration: 700,
             create: { type: "linear", property: "opacity" },
-            update: { type: "spring", springDamping: 0.4 },
+            update: { type: "spring", springDamping: 0.8 },
           });
           setIsLogIn(!isLogIn);
           setErrorText("");
