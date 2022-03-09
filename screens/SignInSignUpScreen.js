@@ -23,6 +23,7 @@ if (
 } //Needs to be manually enabled for android
 
 export default function SignInSignUpScreen({ navigation }) {
+  //const [id, setId] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -40,6 +41,7 @@ export default function SignInSignUpScreen({ navigation }) {
     try {
       setLoading(true);
       const response = await axios.post(API + API_LOGIN, {
+        //id,
         username,
         password,
       });
@@ -65,6 +67,7 @@ export default function SignInSignUpScreen({ navigation }) {
       try {
         setLoading(true);
         const response = await axios.post(API + API_SIGNUP, {
+          //id,
           username,
           password,
         });

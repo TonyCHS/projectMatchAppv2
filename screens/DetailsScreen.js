@@ -7,7 +7,7 @@ import { API, API_POSTS } from "../constants/API";
 import { useSelector } from "react-redux";
 
 export default function ShowScreen({ navigation, route }) {
-  const [post, setPost] = useState({ title: "", content: "" });
+  const [post, setPost] = useState({ title: "", content: "", user_id: "" });
 
   const token = useSelector((state) => state.auth.token);
   const isDark = useSelector((state) => state.accountPrefs.isDark);

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
+  ActivityIndicator,
   View,
   Text,
   StyleSheet,
@@ -7,13 +8,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import axios from "axios";
-import { API, API_CREATE } from "../constants/API";
+import { API, API_CREATE, API_WHOAMI } from "../constants/API";
 import { lightStyles, darkStyles, commonStyles } from "../styles/commonStyles";
 import { useSelector } from "react-redux";
 
 export default function CreateScreen({ navigation }) {
-  // const token = useSelector((state) => state.auth);
-  // Added 3 March 2022
   const token = useSelector((state) => state.auth.token);
 
   const isDark = useSelector((state) => state.accountPrefs.isDark);
@@ -21,12 +20,27 @@ export default function CreateScreen({ navigation }) {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  //Added on 9 March 2022
+  const [user_id, setUser_id] = useState("");
+
+  // Added 9 March 2022
+  async function getUserid() {
+    try {
+      const response = await axios.get(API + API_WHOAMI, {
+        headers: { Authorization: `JWT ${token}` },
+      });
+      setUser_id(response.data.user_id);
+    } catch (error) {}
+  }
 
   async function savePost() {
     const post = {
       title: title,
       content: content,
+      // Added 6 March 2022
+      user_id: user_id,
     };
+
     // Added 3 March 2022
     //const token = await AsyncStorage.getItem("token");
     try {
@@ -40,6 +54,18 @@ export default function CreateScreen({ navigation }) {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    console.log("Setting up nav listener");
+    // Check for when we come back to this screen
+    const removeListener = navigation.addListener("focus", () => {
+      console.log("Running nav listener");
+      setUser_id(<ActivityIndicator />);
+      getUserid();
+    });
+    getUserid();
+    return removeListener;
+  }, []);
 
   return (
     <View style={styles.container}>

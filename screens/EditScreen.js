@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 export default function EditScreen({ navigation, route }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [user_id, setUser_id] = useState("");
   const token = useSelector((state) => state.auth.token);
   const isDark = useSelector((state) => state.accountPrefs.isDark);
   const styles = { ...commonStyles, ...(isDark ? darkStyles : lightStyles) };
@@ -22,12 +23,15 @@ export default function EditScreen({ navigation, route }) {
     const post = route.params.post;
     setTitle(post.title);
     setContent(post.content);
+    // Added 6 March 2022
+    setUser_id(post.user_id);
   }, []);
 
   async function editPost() {
     const post = {
       title: title,
       content: content,
+      user_id: user_id,
     };
     const id = route.params.post.id;
     try {

@@ -18,6 +18,8 @@ import { logOutAction } from "../redux/ducks/blogAuth";
 
 export default function AccountScreen({ navigation }) {
   const [username, setUsername] = useState(null);
+  //Added on 6 March 2022
+  const [user_id, setUser_id] = useState(null);
 
   const token = useSelector((state) => state.auth.token);
   const isDark = useSelector((state) => state.accountPrefs.isDark);
@@ -43,6 +45,8 @@ export default function AccountScreen({ navigation }) {
       });
       console.log("Got user name!");
       setUsername(response.data.username);
+      //Added 6 March 2022
+      setUser_id(response.data.user_id);
     } catch (error) {
       console.log("Error getting user name");
       if (error.response) {
@@ -98,7 +102,7 @@ export default function AccountScreen({ navigation }) {
     <View style={[styles.container, { alignItems: "center" }]}>
       <Text style={[styles.title, styles.text, { margin: 30 }]}>
         {" "}
-        Hello {username} !
+        Hello {username} ! {"\n"} (ID: {user_id})
       </Text>
       <View
         style={{
