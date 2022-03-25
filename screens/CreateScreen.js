@@ -20,6 +20,7 @@ export default function CreateScreen({ navigation }) {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [image, setImage] = useState("");
   //Added on 9 March 2022
   const [user_id, setUser_id] = useState("");
 
@@ -37,6 +38,8 @@ export default function CreateScreen({ navigation }) {
     const post = {
       title: title,
       content: content,
+      // Added April 2022
+      image: image,
       // Added 6 March 2022
       user_id: user_id,
     };
@@ -83,6 +86,11 @@ export default function CreateScreen({ navigation }) {
           style={additionalStyles.input}
           value={content}
           onChangeText={(text) => setContent(text)}
+        />
+        <TextInput
+          style={additionalStyles.input}
+          value={image}
+          onChangeText={(text) => setImage(text)}
         />
         <TouchableOpacity
           style={[styles.button, { marginTop: 20 }]}

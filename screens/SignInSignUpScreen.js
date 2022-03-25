@@ -9,11 +9,14 @@ import {
   LayoutAnimation,
   ActivityIndicator,
   Keyboard,
+  Image,
+  ImageBackground,
 } from "react-native";
 import { API, API_LOGIN, API_SIGNUP } from "../constants/API";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { logInAction } from "../redux/ducks/blogAuth";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 if (
   Platform.OS === "android" &&
@@ -93,22 +96,26 @@ export default function SignInSignUpScreen({ navigation }) {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{isLogIn ? "Log In" : "Sign Up"}</Text>
-      <View style={styles.inputView}>
+      <Image style={styles.logo} source={require("../assets/logo.png")} />
+      <Text style={styles.title}>{isLogIn ? "LOGIN" : "REGISTER"}</Text>
+
+      <View style={styles.inputView1}>
+        <MaterialCommunityIcons name="email" color="white" size={35} />
         <TextInput
           style={styles.textInput}
-          placeholder="Username:"
-          placeholderTextColor="#003f5c"
+          //placeholder="Username:"
+          //placeholderTextColor="#FBF8F1"
           onChangeText={(username) => setUsername(username)}
           value={username}
         />
       </View>
 
-      <View style={styles.inputView}>
+      <View style={styles.inputView2}>
+        <MaterialCommunityIcons name="lock-check" color="white" size={35} />
         <TextInput
           style={styles.textInput}
-          placeholder="Password:"
-          placeholderTextColor="#003f5c"
+          // placeholder="Password:"
+          // placeholderTextColor="#FBF8F1"
           secureTextEntry={true}
           onChangeText={(pw) => setPassword(pw)}
           value={password}
@@ -118,11 +125,12 @@ export default function SignInSignUpScreen({ navigation }) {
       {isLogIn ? (
         <View />
       ) : (
-        <View style={styles.inputView}>
+        <View style={styles.inputView3}>
+          <MaterialCommunityIcons name="lock-check" color="white" size={35} />
           <TextInput
             style={styles.textInput}
-            placeholder="Confirm Password:"
-            placeholderTextColor="#003f5c"
+            // placeholder="confirm password"
+            // placeholderTextColor="#FBF8F1"
             secureTextEntry={true}
             onChangeText={(pw) => setConfirmPassword(pw)}
             value={confirmPassword}
@@ -180,41 +188,84 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontWeight: "bold",
-    fontSize: 40,
+    fontSize: 25,
     margin: 20,
   },
   switchText: {
     fontWeight: "400",
-    fontSize: 20,
+    fontSize: 15,
     marginTop: 20,
+    color: "#05445E",
   },
-  inputView: {
-    backgroundColor: "#FFC0CB",
+  inputView1: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: 15,
+    paddingTop: 3,
+    borderColor: "#000",
+    backgroundColor: "#05445E",
     borderRadius: 30,
-    width: "70%",
+    width: "85%",
     height: 45,
     marginBottom: 20,
-    alignItems: "center",
+  },
+  inputView2: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: 15,
+    paddingTop: 3,
+    paddingBottom: 5,
+    borderColor: "#000",
+    backgroundColor: "#189AB4",
+    borderRadius: 30,
+    width: "85%",
+    height: 45,
+    marginBottom: 20,
+    //alignItems: "center",
+  },
+  inputView3: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: 15,
+    paddingTop: 3,
+    paddingBottom: 5,
+    borderColor: "#000",
+    backgroundColor: "#75E6DA",
+    borderRadius: 30,
+    width: "85%",
+    height: 45,
+    marginBottom: 20,
+    // alignItems: "center",
   },
   textInput: {
+    color: "white",
+    fontSize: 15,
     height: 50,
     flex: 1,
     padding: 10,
   },
   button: {
-    backgroundColor: "blue",
+    backgroundColor: "#D4F1F4",
     borderRadius: 25,
   },
   buttonText: {
     fontWeight: "400",
     fontSize: 20,
     margin: 20,
-    color: "white",
+    color: "#05445E",
   },
   errorText: {
     fontSize: 15,
     color: "red",
     marginTop: 20,
+  },
+  logo: {
+    width: 300,
+    height: 168,
+  },
+  background: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
 });

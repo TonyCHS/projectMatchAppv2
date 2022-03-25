@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { commonStyles, lightStyles, darkStyles } from "../styles/commonStyles";
 import axios from "axios";
 import { API, API_POSTS } from "../constants/API";
@@ -17,10 +17,12 @@ export default function ShowScreen({ navigation, route }) {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={editPost} style={{ marginRight: 10 }}>
-          <FontAwesome
-            name="pencil-square-o"
-            size={30}
-            color={styles.headerTint}
+          <MaterialCommunityIcons
+            //name="pencil-square-o"
+            name="image-edit-outline"
+            size={40}
+            //color={styles.headerTint}
+            color="#122c91"
           />
         </TouchableOpacity>
       ),

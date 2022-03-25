@@ -1,16 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
+  StyleSheet,
   Text,
   View,
   TouchableOpacity,
   FlatList,
   RefreshControl,
+  Image,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { API, API_POSTS } from "../constants/API";
 import { darkStyles, lightStyles } from "../styles/commonStyles";
 import { useSelector } from "react-redux";
+//Amend
+import { Divider } from "react-native-elements";
+import { Button } from "react-native-web";
+
+//This will be our footer component
+const endComponent = () => {
+  return (
+    <View>
+      <Divider orientation="vertical" />
+      <Text style={styles.text}> End of list</Text>
+    </View>
+  );
+};
+
+const data = []; //empty array
+
+const handleEmpty = () => {
+  return (
+    <Text style={styles.text}>
+      {" "}
+      Click on camera{" "}
+      <MaterialCommunityIcons
+        name="camera-outline"
+        size={25}
+        style={{ color: "#122c91", marginRight: 15 }}
+
+        //style={{ color: styles.headerTint, marginRight: 15 }} //#122c91
+      />{" "}
+      to add picture to convert to text.
+    </Text>
+  );
+};
 
 export default function IndexScreen({ navigation, route }) {
   const [posts, setPosts] = useState([]);
@@ -24,10 +58,12 @@ export default function IndexScreen({ navigation, route }) {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={addPost}>
-          <FontAwesome
-            name="plus"
-            size={24}
-            style={{ color: styles.headerTint, marginRight: 15 }}
+          <MaterialCommunityIcons
+            name="camera-outline"
+            size={40}
+            style={{ color: "#122c91", marginRight: 15 }}
+
+            //style={{ color: styles.headerTint, marginRight: 15 }} //#122c91
           />
         </TouchableOpacity>
       ),
@@ -97,41 +133,102 @@ export default function IndexScreen({ navigation, route }) {
       <TouchableOpacity
         onPress={() => navigation.navigate("Details", { id: item.id })}
       >
+        <Text style={styles.container}> </Text>
+        <Image
+          style={{
+            height: 180,
+            width: 400,
+            borderRadius: 180 / 3,
+            overflow: "hidden",
+            shadowColor: "grey",
+          }}
+          //Amend now - renders images from file system:
+          source={require("../assets/word1.png")}
+          //Amend now - renders images from the network:
+          //source={{ uri: item.image }}
+          resizeMode="contain"
+        />
+
         <View
           style={{
-            padding: 10,
-            paddingTop: 20,
+            padding: 30,
+            paddingTop: 10,
             paddingBottom: 20,
-            borderBottomColor: "#ccc",
+            borderBottomColor: "#EFFFFD",
             borderBottomWidth: 1,
+            borderRadius: 30,
             flexDirection: "row",
             justifyContent: "space-between",
           }}
         >
-          <Text style={styles.text}>{item.title}</Text>
+          <Text style={styles.text}>
+            {item.title}
+            {"\n"}
+            {item.content} [ID:{item.user_id}]
+          </Text>
+          {/* Amend now */}
           <TouchableOpacity onPress={() => deletePost(item.id)}>
-            <FontAwesome name="trash" size={20} color="#a80000" />
+            <MaterialCommunityIcons name="shredder" size={30} color="#122c91" />
           </TouchableOpacity>
+
+          {/* <View>
+            <Image
+              style={styles.logo}
+              source={require("../assets/word1.png")}
+            />
+          </View> */}
         </View>
       </TouchableOpacity>
     );
   }
 
+  const list = useRef(null);
+
+  const press = () => {
+    list.current.scrollToEnd({ animated: true });
+  };
+  const header = () => {
+    return <Button onPress={() => press()} title="Go to end" />;
+  };
+
+  //Amend here
   return (
     <View style={styles.container}>
-      <FlatList
-        data={posts}
-        renderItem={renderItem}
-        style={{ width: "100%" }}
-        keyExtractor={(item) => item.id.toString()}
-        refreshControl={
-          <RefreshControl
-            colors={["#9Bd35A", "#689F38"]}
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }
-      />
+      {!data && <Text> Loading</Text>}
+      {data && (
+        <FlatList
+          ref={list}
+          ListEmptyComponent={handleEmpty}
+          //ListFooterComponent={endComponent}
+          ListFooterComponent={endComponent}
+          data={posts}
+          renderItem={renderItem}
+          style={{ width: "100%" }}
+          keyExtractor={(item) => item.id.toString()}
+          //inverted
+          refreshControl={
+            <RefreshControl
+              colors={["#9Bd35A", "#689F38"]}
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        />
+      )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 5,
+  },
+  text: {
+    fontSize: 13,
+    color: "#769FCD",
+    padding: 5,
+    //textAlign: "center",
+  },
+});

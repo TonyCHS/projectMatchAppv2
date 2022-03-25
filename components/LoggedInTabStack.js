@@ -1,9 +1,15 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import BlogStack from "../components/BlogStack";
 import AccountStack from "../components/AccountStack";
-import { FontAwesome } from "@expo/vector-icons";
+
+import ListingEditScreen from "../screens/ListingEditScreen";
+import NewListingButton from "../components/NewListingButton";
 import { useSelector } from "react-redux";
+
+import routes from "../navigation/routes";
 
 const Tab = createBottomTabNavigator();
 
@@ -11,30 +17,54 @@ export default function LoggedInStack() {
   const isDark = useSelector((state) => state.accountPrefs.isDark);
 
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
-          let iconName;
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen
+        name="Listing"
+        component={BlogStack}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="image-search-outline"
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
 
-          if (route.name === "Blog") {
-            iconName = "comments";
-          } else if (route.name === "Settings") {
-            iconName = "cog";
-          }
-          // You can return any component that you like here!
-          return <FontAwesome name={iconName} size={size} color={color} />;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: "tomato",
-        inactiveTintColor: "gray",
-        style: {
-          backgroundColor: isDark ? "#181818" : "white",
-        },
-      }}
-    >
-      <Tab.Screen name="Blog" component={BlogStack} />
-      <Tab.Screen name="Settings" component={AccountStack} />
+      <Tab.Screen
+        name="ListingEdit"
+        component={ListingEditScreen}
+        //options={{
+        options={({ navigation }) => ({
+          tabBarButton: () => (
+            <NewListingButton
+              onPress={() => navigation.navigate(routes.LISTING_EDIT)}
+            />
+          ),
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="camera-outline"
+              color={color}
+              size={size}
+            />
+          ),
+        })}
+      />
+
+      <Tab.Screen
+        name="User"
+        component={AccountStack}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="face-recognition"
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }

@@ -1,37 +1,43 @@
 export const commonStyles = {
   button: {
-    backgroundColor: '#2069e0',
+    backgroundColor: "#2069e0",
     borderRadius: 15,
     width: "50%",
-    alignItems: "center"
+    alignItems: "center",
   },
   buttonText: {
-    fontWeight: '400',
-    fontSize: 20, 
+    fontWeight: "400",
+    fontSize: 20,
     margin: 10,
-    color: 'white',
+    color: "white",
   },
   title: {
     fontWeight: "bold",
-    fontSize: 30, 
-    textAlign: 'center',
+    fontSize: 30,
+    textAlign: "center",
   },
   content: {
-    fontWeight: '400',
+    fontWeight: "400",
     fontSize: 24,
   },
-}
+};
 
 export const lightStyles = {
   container: {
     flex: 1,
-    backgroundColor: "#ffc",
+    //Amend
+    //backgroundColor: "#EFFFFD",
+    backgroundColor: "#D7E9F7",
   },
   text: {
-    color: "black",
+    fontSize: 18,
+    fontWeight: "bold",
+    //color: "#769FCD",
+    color: "#122c91",
   },
   header: {
-    backgroundColor: "yellow",
+    //backgroundColor: "yellow",
+    backgroundColor: "white",
     height: 100,
     shadowColor: "black",
     shadowOpacity: 0.2,
@@ -40,9 +46,10 @@ export const lightStyles = {
   headerTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#f55"
+    //color: "#D6E6F2",#122c91
+    color: "#122c91",
   },
-  headerTint: "#f55"
+  headerTint: "#f55",
 };
 
 export const darkStyles = {
@@ -63,7 +70,7 @@ export const darkStyles = {
   headerTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#f4d47c"
+    color: "#f4d47c",
   },
-  headerTint: "#f4d47c"
-}
+  headerTint: "#f4d47c",
+};
