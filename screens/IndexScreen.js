@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 //Amend
 import { Divider } from "react-native-elements";
 import { Button } from "react-native-web";
+import { string } from "yup";
 
 //This will be our footer component
 const endComponent = () => {
@@ -38,10 +39,8 @@ const handleEmpty = () => {
         name="camera-outline"
         size={25}
         style={{ color: "#122c91", marginRight: 15 }}
-
-        //style={{ color: styles.headerTint, marginRight: 15 }} //#122c91
       />{" "}
-      to add picture to convert to text.
+      to start.
     </Text>
   );
 };
@@ -52,19 +51,19 @@ export default function IndexScreen({ navigation, route }) {
   const isDark = useSelector((state) => state.accountPrefs.isDark);
   const styles = isDark ? darkStyles : lightStyles;
   const token = useSelector((state) => state.auth.token);
+  const image_path = "word1.png";
 
   // This is to set up the top right button
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={addPost}>
-          <MaterialCommunityIcons
+          {/* Amend camera-outline */}
+          {/* <MaterialCommunityIcons
             name="camera-outline"
             size={40}
             style={{ color: "#122c91", marginRight: 15 }}
-
-            //style={{ color: styles.headerTint, marginRight: 15 }} //#122c91
-          />
+          /> */}
         </TouchableOpacity>
       ),
     });
@@ -129,11 +128,16 @@ export default function IndexScreen({ navigation, route }) {
 
   // The function to render each row in our FlatList
   function renderItem({ item }) {
+    console.log(item.image);
+    console.log(item.title);
+    console.log(item.category);
+
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate("Details", { id: item.id })}
       >
         <Text style={styles.container}> </Text>
+
         <Image
           style={{
             height: 180,
@@ -143,12 +147,17 @@ export default function IndexScreen({ navigation, route }) {
             shadowColor: "grey",
           }}
           //Amend now - renders images from file system:
-          source={require("../assets/word1.png")}
+          //source={require("../assets/word1.png")}
+          //source={item.image}
+          //source={require("../assets/word1.png")} //works
+          source={require(`../assets/word1.png`)} //works*
+          // source={item ? require(`../assets/${item.image}`) : null}  //most recent test
+          //source={require(`../assets/${image_path}`)}
           //Amend now - renders images from the network:
           //source={{ uri: item.image }}
+
           resizeMode="contain"
         />
-
         <View
           style={{
             padding: 30,
@@ -164,19 +173,15 @@ export default function IndexScreen({ navigation, route }) {
           <Text style={styles.text}>
             {item.title}
             {"\n"}
-            {item.content} [ID:{item.user_id}]
+            Category: {item.category}
+            {"\n"}
+            Converted text:{item.content}
+            {/* [ID:{item.user_id}] */}
           </Text>
           {/* Amend now */}
           <TouchableOpacity onPress={() => deletePost(item.id)}>
             <MaterialCommunityIcons name="shredder" size={30} color="#122c91" />
           </TouchableOpacity>
-
-          {/* <View>
-            <Image
-              style={styles.logo}
-              source={require("../assets/word1.png")}
-            />
-          </View> */}
         </View>
       </TouchableOpacity>
     );
@@ -229,6 +234,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#769FCD",
     padding: 5,
-    //textAlign: "center",
   },
 });

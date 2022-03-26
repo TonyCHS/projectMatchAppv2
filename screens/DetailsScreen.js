@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { commonStyles, lightStyles, darkStyles } from "../styles/commonStyles";
 import axios from "axios";
@@ -59,10 +59,40 @@ export default function ShowScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, styles.text, { margin: 40 }]}>
+      <Text style={[styles.title, styles.titletext, { margin: 10 }]}>
         {post.title}
       </Text>
-      <Text style={[styles.content, styles.text, { margin: 20 }]}>
+
+      <Image
+        style={{
+          height: 210,
+          width: 400,
+          borderRadius: 180 / 8,
+          overflow: "hidden",
+          shadowColor: "grey",
+        }}
+        source={require(`../assets/word1.png`)} //works*
+        //source={{ uri: item.image }}
+        //resizeMode="contain"
+        resizeMode="contain"
+      />
+
+      <Text style={[styles.categorytext, { marginTop: 10, marginLeft: 20 }]}>
+        Category:
+      </Text>
+      <Text style={[styles.detailtext, { marginLeft: 10 }]}>
+        {post.category}
+      </Text>
+      <Text
+        style={[
+          styles.content,
+          styles.contenttext,
+          { marginTop: 10, marginLeft: 20 },
+        ]}
+      >
+        Converted text:
+      </Text>
+      <Text style={[styles.content, styles.detailtext, { marginLeft: 10 }]}>
         {post.content}
       </Text>
     </View>

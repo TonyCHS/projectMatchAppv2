@@ -10,7 +10,6 @@ function NewListingButton({ onPress }) {
       <View style={styles.container}>
         <MaterialCommunityIcons
           name="camera-outline"
-          // name="plus-circle"
           color={colors.white}
           size={40}
         />

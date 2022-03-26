@@ -30,6 +30,44 @@ export const lightStyles = {
     backgroundColor: "#D7E9F7",
   },
   text: {
+    fontSize: 15,
+    //fontWeight: "bold",
+    //color: "#769FCD",
+    color: "#122c91",
+  },
+  accounttext: {
+    fontSize: 30,
+    color: "#122c91",
+  },
+  accountidtext: {
+    fontSize: 15,
+    color: "#122c91",
+  },
+  titletext: {
+    fontSize: 28,
+    //fontWeight: "bold",
+    //color: "#769FCD",
+    color: "#122c91",
+    padding: 10,
+  },
+  categorytext: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#122c91",
+  },
+  contenttext: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#122c91",
+  },
+  detailtext: {
+    fontSize: 18,
+    //fontWeight: "bold",
+    //color: "#769FCD",
+    color: "#122c91",
+    padding: 10,
+  },
+  headertext: {
     fontSize: 18,
     fontWeight: "bold",
     //color: "#769FCD",
@@ -49,7 +87,8 @@ export const lightStyles = {
     //color: "#D6E6F2",#122c91
     color: "#122c91",
   },
-  headerTint: "#f55",
+  //headerTint: "#f55",
+  headerTint: "#122c91",
 };
 
 export const darkStyles = {

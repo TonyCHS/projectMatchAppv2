@@ -21,6 +21,8 @@ export default function CreateScreen({ navigation }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
+  //Added on April 2022
+  const [category, setCategory] = useState("");
   //Added on 9 March 2022
   const [user_id, setUser_id] = useState("");
 
@@ -40,6 +42,7 @@ export default function CreateScreen({ navigation }) {
       content: content,
       // Added April 2022
       image: image,
+      category: category,
       // Added 6 March 2022
       user_id: user_id,
     };
@@ -73,20 +76,27 @@ export default function CreateScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={{ margin: 20 }}>
-        <Text style={[additionalStyles.label, styles.text]}>Enter Title:</Text>
+        <Text style={[additionalStyles.label, styles.text]}>Title:</Text>
         <TextInput
           style={additionalStyles.input}
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
         <Text style={[additionalStyles.label, styles.text]}>
-          Enter Content:
+          Converted text:
         </Text>
         <TextInput
           style={additionalStyles.input}
           value={content}
           onChangeText={(text) => setContent(text)}
         />
+        <Text style={[additionalStyles.label, styles.text]}>Category:</Text>
+        <TextInput
+          style={additionalStyles.input}
+          value={category}
+          onChangeText={(text) => setCategory(text)}
+        />
+        <Text style={[additionalStyles.label, styles.text]}>Image path:</Text>
         <TextInput
           style={additionalStyles.input}
           value={image}
@@ -105,13 +115,13 @@ export default function CreateScreen({ navigation }) {
 
 const additionalStyles = StyleSheet.create({
   input: {
-    fontSize: 24,
+    fontSize: 20,
     borderWidth: 1,
     borderColor: "black",
     marginBottom: 15,
   },
   label: {
-    fontSize: 28,
+    fontSize: 20,
     marginBottom: 10,
     marginLeft: 5,
   },

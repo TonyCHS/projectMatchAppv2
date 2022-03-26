@@ -25,6 +25,7 @@ function AppFormPicker({
         selectedItem={values[name]}
         width={width}
       />
+
       <ErrorMessage error={errors[name]} visible={touched[name]} />
     </>
   );

@@ -39,7 +39,6 @@ const AppNavigator = () => (
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons
             name="camera-outline"
-            // name="plus-circle"
             color={color}
             size={size}
           />
